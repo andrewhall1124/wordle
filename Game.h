@@ -1,6 +1,5 @@
 #pragma once
 #include "Guess.h"
-#include <vector>
 
 using namespace std;
 
@@ -13,5 +12,13 @@ class Game{
 
     void addGuess(Guess guess){
       guesses.push_back(guess);
+    }
+
+    string toString(){
+      stringstream out;
+      for(Guess guess : guesses){
+        out << guess.toString() << endl;
+      }
+      return out.str();
     }
 };

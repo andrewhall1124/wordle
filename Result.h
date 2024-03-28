@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 using namespace std;
 
@@ -8,4 +7,8 @@ class Result{
     string value;
   public:
     Result(string value): value(value){}
+
+    string toString(){
+      return value;
+    }
 };

@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
 #include "Game.h"
 #include "Word.h"
 #include "Result.h"
@@ -22,6 +25,7 @@ int main()
         Result result(input);
         Guess guess(word, result);
         game.addGuess(guess);
+        cout << endl << game.toString();
     }
     return 0;
 }
