@@ -10,60 +10,59 @@ class Game{
     vector<Word> remainingWords;
 
     vector<string> split(const string& s, char delimiter) {
-        vector<string> tokens;
-        string token;
-        istringstream tokenStream(s);
-        while (getline(tokenStream, token, delimiter)) {
-            tokens.push_back(token);
-        }
-        return tokens;
+    vector<string> tokens;
+    string token;
+    istringstream tokenStream(s);
+    while (getline(tokenStream, token, delimiter)) {
+      tokens.push_back(token);
+    }
+    return tokens;
     }
 
     void removeWords(Guess guess) {
-        vector<Word> newWords;
-        for (Word word : remainingWords) {
-            bool addWord = true;
-            for (int col = 0; col < guess.getWord().size(); col++) {
-                char letter = guess.getWord().at(col);
-                char type = guess.getResult().at(col);
-                switch (type) {
-                    // First remove words that don't have letter in position i (Green)
-                    case 'G':
-                        if (word.at(col) != letter) {
-                            addWord = false;
-                        }
-                        break;
-                    // Second remove words that have letter (Grey)
-                    case 'X':
-                        for (char character : word.toString()) {
-                            if (character == letter) {
-                                addWord = false;
-                                break;
-                            }
-                        }
-                        break;
-                    // Third remove words that have letter in position i (Yellow)
-                    // Also remove words that don't have letter in position i
-                    case 'Y':
-                      bool hasLetter = false;
-                      for (char character : word.toString()) {
-                          if (character == letter) {
-                              hasLetter = true;
-                              break;
-                          }
-                      }
-                      if (!hasLetter) {
-                          addWord = false;
-                      }
-                      break;
+      vector<Word> newWords;
+      for (Word word : remainingWords) {
+        bool addWord = true;
+        for (int col = 0; col < guess.getWord().size(); col++) {
+          char letter = guess.getWord().at(col);
+          char type = guess.getResult().at(col);
+          switch (type) {
+            // First remove words that don't have letter in position i (Green)
+            case 'G':
+                if (word.at(col) != letter) {
+                    addWord = false;
                 }
-                if (!addWord)
-                    break; // No need to check further if the word is marked for removal
-            }
-            if (addWord)
-                newWords.push_back(word);
+                break;
+            // Second remove words that have letter (Grey)
+            case 'X':
+                for (char character : word.toString()) {
+                    if (character == letter) {
+                        addWord = false;
+                        break;
+                    }
+                }
+                break;
+            // Third remove words that have letter in position i (Yellow)
+            // Also remove words that don't have letter in position i
+            case 'Y':
+              bool hasLetter = false;
+              for (char character : word.toString()) {
+                  if (character == letter) {
+                      hasLetter = true;
+                      break;
+                  }
+              }
+              if (!hasLetter) {
+                  addWord = false;
+              }
+              break;
+          }
         }
-        remainingWords = newWords;
+        if (addWord){
+            newWords.push_back(word);
+        }
+      }
+      remainingWords = newWords;
     }
 
   public:
