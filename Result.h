@@ -8,6 +8,10 @@ class Result{
   public:
     Result(string value): value(value){}
 
+    char at(int index){
+      return value.at(index);
+    }
+
     string toString(){
       return value;
     }

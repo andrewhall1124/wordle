@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <fstream>
 #include "Game.h"
 #include "Word.h"
 #include "Result.h"
@@ -13,6 +14,7 @@ int main()
 {
     string input;
     Game game;
+    game.loadWordBank();
     while(input != "Correct"){
         cout << "Guess: ";
         cin >> input;
@@ -25,7 +27,7 @@ int main()
         Result result(input);
         Guess guess(word, result);
         game.addGuess(guess);
-        cout << endl << game.toString();
+        cout << "Next guess: " << game.genGuess() << endl;
     }
     return 0;
 }
