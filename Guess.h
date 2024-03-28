@@ -1,3 +1,4 @@
+#pragma once
 #include "Word.h"
 #include "Result.h"
 

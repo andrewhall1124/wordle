@@ -8,17 +8,20 @@ using namespace std;
 
 int main()
 {
-    string guess;
-    string response;
+    string input;
     Game game;
-    while(guess != "Correct"){
+    while(input != "Correct"){
         cout << "Guess: ";
-        cin >> guess;
+        cin >> input;
+        if(input == "Correct"){
+            break;
+        }
+        Word word(input);
         cout << "Response: ";
-        cin >> response;
-        Word word(guess);
-        Result result(response);
+        cin >> input;
+        Result result(input);
         Guess guess(word, result);
+        game.addGuess(guess);
     }
     return 0;
 }
