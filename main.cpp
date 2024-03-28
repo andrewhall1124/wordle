@@ -27,7 +27,7 @@ int main()
         Result result(input);
         Guess guess(word, result);
         game.addGuess(guess);
-        cout << "Next guess: " << game.genGuess() << endl;
+        cout << "Next guess: "  << endl << game.genGuess() << endl;
     }
     return 0;
 }
