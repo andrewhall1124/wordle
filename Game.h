@@ -91,18 +91,28 @@ class Game{
         }
       }
 
-      map<char,int> letterMap;
-      for(string word : remainingWords){
-        for(int i = 0; i < word.size(); i++){
-          if(knownColumns[i]){
-            continue;
+      map<char, int> letterMap;
+      for (char c = 'a'; c <= 'z'; c++) {
+          letterMap[c] = 0;
+      }
+
+      for (const string& word : remainingWords) {
+          for (int i = 0; i < word.size(); i++) {
+              if (knownColumns[i]) {
+                  continue;
+              }
+              char letter = word[i];
+              letterMap[letter]++;
           }
-          char letter = word[i];
-          auto it = letterMap.find(letter);
-          if (it != letterMap.end()) {
-              it->second++;
-          } else {
-              letterMap[letter] = 1;
+      }
+
+      for(int i = 0; i < results.size(); i++){
+        string guess = guesses[i];
+        string result = results[i];
+        for(int j = 0; j < result.size(); j++) {
+          char type = result[j];
+          if(type == 'G'){
+            letterMap[guess[j]] = 0;
           }
         }
       }
