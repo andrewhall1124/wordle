@@ -4,6 +4,7 @@ using namespace std;
 class Game{
   private:
     vector<string> guesses;
+    vector<string> results;
     vector<string> wordBank;
     vector<string> remainingWords;
 
@@ -80,6 +81,22 @@ class Game{
       remainingWords = move(newRemainingWords);
     }
 
+    vector<char> mostCommonLetters(){
+      vector<bool> knownColumns(5,false);
+      for(string result : results){
+        for(int i = 0; i < result.size(); i++){
+          if(result[i] == 'G'){
+            knownColumns[i] = true;
+          }
+        }
+      }
+
+      map<char,int> letterMap;
+      for(string word : remainingWords){
+
+      }
+    }
+
   public:
     Game(){
       loadWordBank();
@@ -87,10 +104,12 @@ class Game{
 
     void addGuess(string guess, string result){
       guesses.push_back(guess);
+      results.push_back(result);
       updateRemainingWords(guess, result);
     }
 
     string firstGuess(string guess, string result){
+      mostCommonLetters();
       return "guess" + '\n';
     }
 
