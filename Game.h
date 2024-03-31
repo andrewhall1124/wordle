@@ -111,6 +111,54 @@ class Game{
       return out.str();
     }
 
+    string genGuess2(){
+      map<char,int> letterMap;
+      bool knownColumns[5] = {false, false, false, false, false};
+
+      //Find known columns
+      for(Guess guess : guesses){
+        Result result = guess.getResult();
+        for(int i = 0; i < 5; i++){
+          char letter = result.toString().at(i);
+          if(letter == 'G'){
+            knownColumns[i] = true;
+          }
+        }
+      }
+      for(bool label : knownColumns){
+        cout << label << ", ";
+      }
+
+      //Count letter in unknownColumns
+      for(Word word : remainingWords){
+        for(int i = 0; i < word.toString().size(); i++){
+          if(!knownColumns[i]){
+            char letter = word.toString().at(i);
+            if(letterMap.find(letter) == letterMap.end()){
+              //Key does not exist
+              letterMap[letter] = 1;
+            }
+            else{
+              //Key does exist
+              int count = letterMap[letter];
+              letterMap[letter] = count + 1;
+            }
+          }
+        }
+      }
+
+      //Create sorted vector of most frequent letters
+      // Sort letterMap based on count in descending order
+      vector<pair<char, int>> sortedCounts(letterMap.begin(), letterMap.end());
+      sort(sortedCounts.begin(), sortedCounts.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+          return a.second > b.second;
+      });
+      for (const auto& pair : sortedCounts) {
+        cout << pair.first << ": " << pair.second << endl;
+      }
+        return "";
+      }
+
     string toString(){
       stringstream out;
       for(Guess guess : guesses){

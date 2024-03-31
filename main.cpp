@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <map>
+#include <algorithm>
 #include "Game.h"
 #include "Word.h"
 #include "Result.h"
@@ -21,13 +23,15 @@ int main()
         if(input == "Correct"){
             break;
         }
-        Word word(input);
+        string word = input;
         cout << "Response: ";
         cin >> input;
         Result result(input);
         Guess guess(word, result);
         game.addGuess(guess);
         cout << "Next guess: "  << endl << game.genGuess() << endl;
+        game.genGuess2();
+        cout << endl;
     }
     return 0;
 }

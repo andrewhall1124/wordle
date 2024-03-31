@@ -4,11 +4,11 @@
 
 class Guess{
   private:
-    Word word;
+    string word;
     Result result;
 
   public:
-    Guess(Word word, Result result): word(word),result(result){};
+    Guess(string word, Result result): word(word),result(result){};
 
     Result getResult(){
       return result;
@@ -20,7 +20,7 @@ class Guess{
 
     string toString(){
       stringstream out;
-      out << "Word: " << word.toString() << endl;
+      out << "Word: " << word << endl;
       out << "Result: " << result.toString() << endl;
       return out.str();
     }
