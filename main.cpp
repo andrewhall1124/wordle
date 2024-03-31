@@ -10,19 +10,22 @@
 
 using namespace std;
 
-int main()
-{
-    string input;
+int main(){
     Game game;
-    while(input != "Correct"){
-        cout << "Guess: ";
-        cin >> input;
-        if(input == "Correct"){
-            break;
-        }
-        string word = input;
-        cout << "Response: ";
-        cin >> input;
-    }
+
+    string guess;
+    string result;
+    cout << "Guess: ";
+    cin >> guess;
+    cout << "Result: ";
+    cin >> result;
+
+    game.addGuess(guess, result);
+    cout << endl << "Remaining words: " << endl;
+    cout << game.getRemainingWords() << endl;
+    cout << endl << "Next guess: ";
+    cout << game.firstGuess(guess, result) << endl;
+;
+
     return 0;
 }
