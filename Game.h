@@ -156,6 +156,15 @@ class Game{
       return bestWord;
     }
 
+    string secondGuess(string guess, string result){
+      if(remainingWords.size() == 1){
+        return remainingWords[0];
+      }
+      else{
+        return firstGuess(guess, result);
+      }
+    }
+
     string getRemainingWords(){
       stringstream out;
       int cols = 15;
