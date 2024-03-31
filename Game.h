@@ -38,9 +38,9 @@ class Game{
     }
 
     void updateRemainingWords(const string& guess, const string& result) {
-    vector<string> newRemainingWords;
+      vector<string> newRemainingWords;
 
-    for (const string& word : remainingWords) {
+      for (const string& word : remainingWords) {
         bool keepWord = true;
         vector<int> letterIndices(26, -1);  // Initialize with -1 for all letters
 
@@ -55,22 +55,22 @@ class Game{
 
             switch (type) {
               case 'G':  // Green: The letter is in the word and in the correct spot
-                  if (word[i] != letter) {
-                      keepWord = false;
-                  }
-                  break;
+                if (word[i] != letter) {
+                    keepWord = false;
+                }
+                break;
               case 'X':  // Gray: The letter is not in the word
-                  if (letterIndices[letter - 'a'] != -1) {
-                      keepWord = false;
-                  }
-                  break;
+                if (letterIndices[letter - 'a'] != -1) {
+                    keepWord = false;
+                }
+                break;
               case 'Y':  // Yellow: The letter is in the word but in the wrong spot
-                  if (word[i] == letter || letterIndices[letter - 'a'] == -1) {
-                      keepWord = false;
-                  } else {
-                      letterIndices[letter - 'a'] = -2;  // Mark the letter as used
-                  }
-                  break;
+                if (word[i] == letter || letterIndices[letter - 'a'] == -1) {
+                    keepWord = false;
+                } else {
+                    letterIndices[letter - 'a'] = -2;  // Mark the letter as used
+                }
+                break;
             }
             if (!keepWord) break;
         }
@@ -81,7 +81,7 @@ class Game{
       remainingWords = move(newRemainingWords);
     }
 
-    vector<char> mostCommonLetters(){
+    vector<pair<char,int>> mostCommonLetters(){
       vector<bool> knownColumns(5,false);
       for(string result : results){
         for(int i = 0; i < result.size(); i++){
@@ -93,8 +93,26 @@ class Game{
 
       map<char,int> letterMap;
       for(string word : remainingWords){
-
+        for(int i = 0; i < word.size(); i++){
+          if(knownColumns[i]){
+            continue;
+          }
+          char letter = word[i];
+          auto it = letterMap.find(letter);
+          if (it != letterMap.end()) {
+              it->second++;
+          } else {
+              letterMap[letter] = 1;
+          }
+        }
       }
+
+      vector<pair<char, int>> letterCountPairs(letterMap.begin(), letterMap.end());
+      sort(letterCountPairs.begin(), letterCountPairs.end(), [](const pair<char, int>& a, const pair<char, int>& b) {
+          return a.second > b.second;
+      });
+
+      return letterCountPairs;
     }
 
   public:
@@ -109,16 +127,46 @@ class Game{
     }
 
     string firstGuess(string guess, string result){
-      mostCommonLetters();
-      return "guess" + '\n';
+      vector<pair<char,int>> commonLetters = mostCommonLetters();
+      int maxCount = 0;
+      string bestWord;
+      for (const string& word : wordBank) {
+        int count = 0;
+        for (pair letter : commonLetters) {
+            if (word.find(letter.first) != string::npos) {
+                count+=letter.second;
+            }
+        }
+        if (count > maxCount) {
+            maxCount = count;
+            bestWord = word;
+        }
+      }
+
+      return bestWord + '\n';
     }
 
     string getRemainingWords(){
       stringstream out;
-      int cols = 5;
+      int cols = 15;
       for(int i = 0; i < remainingWords.size(); i++){
         string word = remainingWords[i];
         out << word << "    ";
+        if((i + 1) % cols == 0){
+          out << endl;
+        }
+      }
+      return out.str();
+    }
+
+    string getMostCommonLetters(){
+      stringstream out;
+      int cols =15;
+      vector<pair<char,int>> commonLetters = mostCommonLetters();
+      for(int i = 0; i < commonLetters.size(); i++){
+        char letter = commonLetters[i].first;
+        int count = commonLetters[i].second;
+        out << letter << ": " << count << "    ";
         if((i + 1) % cols == 0){
           out << endl;
         }

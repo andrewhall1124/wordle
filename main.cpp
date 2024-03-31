@@ -15,28 +15,34 @@ int main(){
 
     string guess;
     string result;
+
+    //Initial guess
     cout << "Guess: ";
     cin >> guess;
     cout << "Result: ";
     cin >> result;
-
+    //Initial sugguestion 
     game.addGuess(guess, result);
     cout << endl << "Remaining words: " << endl;
     cout << game.getRemainingWords() << endl;
+    cout << endl << "Most common letters: " << endl;
+    cout << game.getMostCommonLetters() << endl;
     cout << endl << "Next guess: ";
     cout << game.firstGuess(guess, result) << endl;
 
+    //Guess 2
     cout << "Guess: ";
     cin >> guess;
     cout << "Result: ";
     cin >> result;
-
+    //Suggestion 2
     game.addGuess(guess, result);
     cout << endl << "Remaining words: " << endl;
     cout << game.getRemainingWords() << endl;
+    cout << endl << "Most common letters: " << endl;
+    cout << game.getMostCommonLetters() << endl;
     cout << endl << "Next guess: ";
     cout << game.firstGuess(guess, result) << endl;
-;
 
     return 0;
 }
