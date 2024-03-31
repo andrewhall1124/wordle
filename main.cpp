@@ -43,6 +43,6 @@ int main(){
     cout << game.getMostCommonLetters() << endl;
     cout << endl << "Next guess: ";
     cout << game.firstGuess(guess, result) << endl;
-
+    cout << endl;
     return 0;
 }

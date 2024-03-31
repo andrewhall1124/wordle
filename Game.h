@@ -153,7 +153,7 @@ class Game{
         }
       }
 
-      return bestWord + '\n';
+      return bestWord;
     }
 
     string getRemainingWords(){
