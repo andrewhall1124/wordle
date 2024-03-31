@@ -9,6 +9,26 @@ class Game{
     vector<Word> wordBank;
     vector<Word> remainingWords;
 
+    void loadWordBank(){
+      cout << "Loading word bank..." << endl;
+      ifstream file("wordle.csv");
+      if (!file.is_open()) {
+          cout << "Error opening file." << endl;
+      }
+
+      string line;
+      while (getline(file, line)) {
+          vector<string> tokens = split(line, ',');
+          Word word(tokens[0]);
+          word.setOccurence(tokens[1]);
+          wordBank.push_back(word);
+      }
+      remainingWords = wordBank;
+
+      file.close();
+      cout << "Complete!" << endl;
+    }
+
     vector<string> split(const string& s, char delimiter) {
       vector<string> tokens;
       string token;
@@ -22,10 +42,13 @@ class Game{
     void removeWords(Guess guess) {
       vector<Word> newWords;
       for (Word word : remainingWords) {
+        cout << word.toString() << endl;
+
 
         bool addWord = true;
 
         for (int col = 0; col < guess.getWord().size(); col++) {
+          cout << "Col: " << col << endl;
 
           char letter = guess.getWord().at(col);
           char type = guess.getResult().at(col);
@@ -73,27 +96,11 @@ class Game{
     }
 
   public:
-    Game(){}
-
-    void loadWordBank(){
-      cout << "Loading word bank..." << endl;
-      ifstream file("wordle.csv");
-      if (!file.is_open()) {
-          cout << "Error opening file." << endl;
-      }
-
-      string line;
-      while (getline(file, line)) {
-          vector<string> tokens = split(line, ',');
-          Word word(tokens[0]);
-          word.setOccurence(tokens[1]);
-          wordBank.push_back(word);
-      }
-      remainingWords = wordBank;
-
-      file.close();
-      cout << "Complete!" << endl;
+    Game(){
+      loadWordBank();
     }
+
+    
 
     void addGuess(Guess guess){
       guesses.push_back(guess);

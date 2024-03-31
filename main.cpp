@@ -17,7 +17,6 @@ int main()
 {
     string input;
     Game game;
-    game.loadWordBank();
     while(input != "Correct"){
         cout << "Guess: ";
         cin >> input;
