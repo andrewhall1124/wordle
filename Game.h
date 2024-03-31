@@ -125,9 +125,6 @@ class Game{
           }
         }
       }
-      for(bool label : knownColumns){
-        cout << label << ", ";
-      }
 
       //Count letter in unknownColumns
       for(Word word : remainingWords){
@@ -156,8 +153,29 @@ class Game{
       for (const auto& pair : sortedCounts) {
         cout << pair.first << ": " << pair.second << endl;
       }
-        return "";
+
+      //Find word made up of most common letter. 
+      string result = "";
+      int letterIndex = 0;
+      for(int i = 0; i < sortedCounts.size(); i++){
+        //Create vector of letters to check
+        vector<char> check;
+        for(int j = letterIndex; j < 5+letterIndex; j++){
+          char addLetter = sortedCounts[j].first;
+          check.push_back(addLetter);
+        }
+        //Iterate over all remaining words
+        for(int k = 0; k < remainingWords.size(); k++){
+          Word word = remainingWords[k];
+          if(word.containsAll(check)){
+            result = word.toString();
+            break;
+          }
+        }
       }
+
+      return "";
+    }
 
     string toString(){
       stringstream out;

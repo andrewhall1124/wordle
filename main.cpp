@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <map>
+#include <set>
 #include <algorithm>
 #include "Game.h"
 #include "Word.h"
@@ -30,7 +31,7 @@ int main()
         Guess guess(word, result);
         game.addGuess(guess);
         cout << "Next guess: "  << endl << game.genGuess() << endl;
-        game.genGuess2();
+        cout << "Next guess: " <<  game.genGuess2() << endl;
         cout << endl;
     }
     return 0;
