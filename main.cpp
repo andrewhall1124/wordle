@@ -59,5 +59,20 @@ int main(){
     cout << endl << "Next guess: ";
     cout << game.secondGuess(guess, result) << endl;
     cout << endl;
+
+    //Guess 4
+    cout << "Guess: ";
+    cin >> guess;
+    cout << "Result: ";
+    cin >> result;
+    //Suggestion 4
+    game.addGuess(guess, result);
+    cout << endl << "Remaining words: " << endl;
+    cout << game.getRemainingWords() << endl;
+    cout << endl << "Most common letters: " << endl;
+    cout << game.getMostCommonLetters() << endl;
+    cout << endl << "Next guess: ";
+    cout << game.secondGuess(guess, result) << endl;
+    cout << endl;
     return 0;
 }
