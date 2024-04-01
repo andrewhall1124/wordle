@@ -9,7 +9,6 @@ class Game{
     vector<string> remainingWords;
 
     void loadWordBank(){
-      cout << "Loading word bank..." << endl;
       ifstream file("wordle.csv");
       if (!file.is_open()) {
           cout << "Error opening file." << endl;
@@ -21,10 +20,24 @@ class Game{
           string word(tokens[0]);
           wordBank.push_back(word);
       }
-      remainingWords = wordBank;
 
       file.close();
-      cout << "Complete!" << endl;
+    }
+
+    void loadRemainingWords(){
+      ifstream file("remaining_words.csv");
+      if (!file.is_open()) {
+          cout << "Error opening file." << endl;
+      }
+
+      string line;
+      while (getline(file, line)) {
+          vector<string> tokens = split(line, ',');
+          string word(tokens[0]);
+          remainingWords.push_back(word);
+      }
+
+      file.close();
     }
 
     vector<string> split(const string& s, char delimiter) {
@@ -128,6 +141,7 @@ class Game{
   public:
     Game(){
       loadWordBank();
+      loadRemainingWords();
     }
 
     void addGuess(string guess, string result){
