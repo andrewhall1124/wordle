@@ -16,63 +16,18 @@ int main(){
     string guess;
     string result;
 
-    //Initial guess
-    cout << "Guess: ";
-    cin >> guess;
-    cout << "Result: ";
-    cin >> result;
-    //Initial sugguestion 
-    game.addGuess(guess, result);
-    cout << endl << "Remaining words: " << endl;
-    cout << game.getRemainingWords() << endl;
-    cout << endl << "Most common letters: " << endl;
-    cout << game.getMostCommonLetters() << endl;
-    cout << endl << "Next guess: ";
-    cout << game.firstGuess(guess, result) << endl;
-
-    //Guess 2
-    cout << "Guess: ";
-    cin >> guess;
-    cout << "Result: ";
-    cin >> result;
-    //Suggestion 2
-    game.addGuess(guess, result);
-    cout << endl << "Remaining words: " << endl;
-    cout << game.getRemainingWords() << endl;
-    cout << endl << "Most common letters: " << endl;
-    cout << game.getMostCommonLetters() << endl;
-    cout << endl << "Next guess: ";
-    cout << game.firstGuess(guess, result) << endl;
-    cout << endl;
-
-    //Guess 3
-    cout << "Guess: ";
-    cin >> guess;
-    cout << "Result: ";
-    cin >> result;
-    //Suggestion 3
-    game.addGuess(guess, result);
-    cout << endl << "Remaining words: " << endl;
-    cout << game.getRemainingWords() << endl;
-    cout << endl << "Most common letters: " << endl;
-    cout << game.getMostCommonLetters() << endl;
-    cout << endl << "Next guess: ";
-    cout << game.secondGuess(guess, result) << endl;
-    cout << endl;
-
-    //Guess 4
-    cout << "Guess: ";
-    cin >> guess;
-    cout << "Result: ";
-    cin >> result;
-    //Suggestion 4
-    game.addGuess(guess, result);
-    cout << endl << "Remaining words: " << endl;
-    cout << game.getRemainingWords() << endl;
-    cout << endl << "Most common letters: " << endl;
-    cout << game.getMostCommonLetters() << endl;
-    cout << endl << "Next guess: ";
-    cout << game.secondGuess(guess, result) << endl;
-    cout << endl;
+    bool complete = false;
+    while(!complete){
+        cout << endl << "Guess: ";
+        cin >> guess;
+        cout << "Result: ";
+        cin >> result;
+        game.addGuess(guess, result);
+        cout << game.getRemainingWords() << endl;
+        cout << game.getMostCommonLetters() << endl;
+        cout << game.nextGuess(guess, result) << endl;
+        complete = game.getComplete();
+    }
+    
     return 0;
 }

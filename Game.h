@@ -7,6 +7,7 @@ class Game{
     vector<string> results;
     vector<string> wordBank;
     vector<string> remainingWords;
+    bool complete = false;
 
     void loadWordBank(){
       ifstream file("wordle.csv");
@@ -150,7 +151,7 @@ class Game{
       updateRemainingWords(guess, result);
     }
 
-    string firstGuess(string guess, string result){
+    string optimalGuess(string guess, string result){
       vector<pair<char,int>> commonLetters = mostCommonLetters();
       int maxCount = 0;
       string bestWord;
@@ -170,23 +171,30 @@ class Game{
       return bestWord;
     }
 
-    string secondGuess(string guess, string result){
+    string nextGuess(string guess, string result){
+      stringstream out;
+      out << endl << "Next guess: ";
       if(remainingWords.size() == 1){
-        return remainingWords[0];
+        out << remainingWords[0] << endl;
+        complete = true;
       }
       else{
-        return firstGuess(guess, result);
+        out << optimalGuess(guess, result);
       }
+      return out.str();
     }
 
     string getRemainingWords(){
       stringstream out;
-      int cols = 15;
-      for(int i = 0; i < remainingWords.size(); i++){
-        string word = remainingWords[i];
-        out << word << "    ";
-        if((i + 1) % cols == 0){
-          out << endl;
+      out << endl << "Remaining words ("<< remainingWords.size() << "): " << endl;
+      int cols = 8;
+      if(remainingWords.size() <= 8){
+        for(int i = 0; i < remainingWords.size(); i++){
+          string word = remainingWords[i];
+          out << word << "    ";
+          if((i + 1) % cols == 0 && (i + 1) != cols){
+            out << endl;
+          }
         }
       }
       return out.str();
@@ -194,16 +202,23 @@ class Game{
 
     string getMostCommonLetters(){
       stringstream out;
-      int cols =15;
+      out << endl << "Most common letters: " << endl;
+      int cols =8;
       vector<pair<char,int>> commonLetters = mostCommonLetters();
       for(int i = 0; i < commonLetters.size(); i++){
         char letter = commonLetters[i].first;
         int count = commonLetters[i].second;
-        out << letter << ": " << count << "    ";
-        if((i + 1) % cols == 0){
-          out << endl;
+        if(!count == 0){
+          out << letter << ": " << count << "    ";
+          if((i + 1) % cols == 0){
+            out << endl;
+          }
         }
       }
       return out.str();
+    }
+
+    bool getComplete(){
+      return complete;
     }
 };
